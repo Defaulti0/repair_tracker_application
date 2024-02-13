@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Customers',
+      title: 'Repairs',
       home: HomePage(),
     );
   }
@@ -32,7 +32,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _future = Supabase.instance.client
-      .from('customers')
+      .from('Repairs')
       .select();
 
   @override
@@ -44,13 +44,13 @@ class _HomePageState extends State<HomePage> {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
-          final customers = snapshot.data!;
+          final repairs = snapshot.data!;
           return ListView.builder(
-            itemCount: customers.length,
+            itemCount: repairs.length,
             itemBuilder: ((context, index) {
-              final customer = customers[index];
+              final repair = repairs[index];
               return ListTile(
-                title: Text(customer['name']),
+                title: Text(repair['Case Number']),
               );
             }),
           );
