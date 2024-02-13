@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:repair_tracker_application/main_menu.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,45 +19,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Repairs',
-      home: HomePage(),
+      title: 'Customers',
+      home: MainMenu(title: "Main Menu",),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final _future = Supabase.instance.client
-      .from('Repairs')
-      .select();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: _future,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          final repairs = snapshot.data!;
-          return ListView.builder(
-            itemCount: repairs.length,
-            itemBuilder: ((context, index) {
-              final repair = repairs[index];
-              return ListTile(
-                title: Text(repair['Case Number']),
-              );
-            }),
-          );
-        },
-      ),
-    );
-  }
-}
