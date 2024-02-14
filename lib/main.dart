@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'pages/employee_manage_pages/add_employee.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
@@ -11,6 +12,8 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
+final supabase = Supabase.instance.client;
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -18,44 +21,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Customers',
-      home: HomePage(),
+      home: AddEmployee(),
     );
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final _future = Supabase.instance.client
-      .from('customers')
-      .select();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: _future,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          final customers = snapshot.data!;
-          return ListView.builder(
-            itemCount: customers.length,
-            itemBuilder: ((context, index) {
-              final customer = customers[index];
-              return ListTile(
-                title: Text(customer['name']),
-              );
-            }),
-          );
-        },
-      ),
-    );
-  }
-}
