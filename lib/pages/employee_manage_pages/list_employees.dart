@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class ListEmployees extends StatefulWidget {
+  const ListEmployees({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ListEmployees> createState() => _ListEmployeesState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ListEmployeesState extends State<ListEmployees> {
   final _future = Supabase.instance.client
-      .from('customers')
+      .from('Employees')
       .select();
 
   @override
@@ -22,13 +22,14 @@ class _HomePageState extends State<HomePage> {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
-          final customers = snapshot.data!;
+          final employees = snapshot.data!;
           return ListView.builder(
-            itemCount: customers.length,
+            itemCount: employees.length,
             itemBuilder: ((context, index) {
-              final customer = customers[index];
+              final employee = employees[index];
               return ListTile(
-                title: Text(customer['name']),
+                title: Text(employee['First Name' 'Last Name']),
+                
               );
             }),
           );

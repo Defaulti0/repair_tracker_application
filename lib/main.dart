@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:repair_tracker_application/main_menu.dart';
+import 'pages/employee_manage_pages/add_employee.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,6 +12,8 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
+final supabase = Supabase.instance.client;
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Customers',
-      home: MainMenu(title: "Main Menu",),
+      home: AddEmployee(),
     );
   }
 }
