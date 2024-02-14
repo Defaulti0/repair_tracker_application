@@ -14,21 +14,29 @@ class MainMenu extends StatelessWidget {
         backgroundColor: Colors.blue,
       ),
       body: Center(
-        children: [
-          TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter the first name',
+        child: Column(
+          children: [
+            TextFormField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter the first name',
+              ),
             ),
-          ),
-          TextFormField(
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(),
-              hintText: 'Enter the last name',
+            TextFormField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter the last name',
+              ),
             ),
-          ),
-        ]
-      )
+            TextFormField(
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                hintText: 'Enter the employee pin',
+              ),
+            )
+          ]
+        ),
+      ),
     );
   }
 }
