@@ -60,6 +60,9 @@ class _AddEmployeeState extends State<AddEmployee> {
             ElevatedButton(
               onPressed: () async {
                 await supabase
+                  // check if user and primary key are actually in there
+                  //  if true, reject and show popup,
+                  // if false, insert row
                   .from('Users')
                   .insert({'First Name':firstnamecontroller.text, 'Last Name':lastnamecontroller.text, 'Employee ID':employeepin.text});
               },
