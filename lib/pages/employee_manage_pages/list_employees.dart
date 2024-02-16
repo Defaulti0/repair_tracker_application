@@ -16,6 +16,10 @@ class _ListEmployeesState extends State<ListEmployees> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Employee Management'),
+        backgroundColor: Colors.blue,
+      ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: _future,
         builder: (context, snapshot) {
@@ -32,11 +36,14 @@ class _ListEmployeesState extends State<ListEmployees> {
               //  Text ('Item $index'),
               // ); 
               // to build items on demand
-              return ListView(
+              return Row(
                 children: [
                   Text(employee['First Name']),
+                  const Text(" "),
                   Text(employee['Last Name']),
+                  const Text(", "),
                   Text(employee['Employee ID'].toString()),
+                  const Text(", "),
                   Text(employee['Employee Type']),
                 ],
 
