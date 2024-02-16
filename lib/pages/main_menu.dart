@@ -29,6 +29,15 @@ class _MainMenuState extends State<MainMenu> {
                 },
                 child: const Text('Manage Employees')
               ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute( 
+                      builder: (context) => const ManageEmployee(),
+                    ),
+                  );
+              }, 
+              child: child)
             ],
           ),
         ),
