@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'employee_manage_pages/manage_employee.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -19,12 +20,18 @@ class _MainMenuState extends State<MainMenu> {
           child: Column(
             children: [
               TextButton(
-                onPressed: () {},
-                child: Text('Manage Employees')
-                ),
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute( 
+                      builder: (context) => const ManageEmployee(),
+                    ),
+                  );
+                },
+                child: const Text('Manage Employees')
+              ),
             ],
           ),
         ),
       );
-     }
+    }
 }

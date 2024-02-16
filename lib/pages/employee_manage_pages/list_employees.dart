@@ -27,8 +27,18 @@ class _ListEmployeesState extends State<ListEmployees> {
             itemCount: employees.length,
             itemBuilder: ((context, index) {
               final employee = employees[index];
-              return const Row(
-                
+              // use ListView.builder(
+              // itemBuilder: (_, index) =>
+              //  Text ('Item $index'),
+              // ); 
+              // to build items on demand
+              return ListView(
+                children: [
+                  Text(employee['First Name']),
+                  Text(employee['Last Name']),
+                  Text(employee['Employee ID'].toString()),
+                  Text(employee['Employee Type']),
+                ],
 
               );
               // return ListTile(
