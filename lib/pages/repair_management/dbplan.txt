@@ -1,0 +1,3 @@
+each case number should be different for every order
+the same person can bring in different devices
+the same person usually uses the same phone number
