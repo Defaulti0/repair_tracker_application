@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class ListEmployees extends StatefulWidget {
-  const ListEmployees({super.key});
+class ListRepairs extends StatefulWidget {
+  const ListRepairs({super.key});
 
   @override
-  State<ListEmployees> createState() => _ListEmployeesState();
+  State<ListRepairs> createState() => _ListRepairsState();
 }
 
-class _ListEmployeesState extends State<ListEmployees> {
+class _ListRepairsState extends State<ListRepairs> {
   final _future = Supabase.instance.client
-      .from('Employees')
+      .from('Repairs')
       .select();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Employee Management'),
+        title: const Text('Repair Management'),
         backgroundColor: Colors.blue,
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
@@ -26,11 +26,11 @@ class _ListEmployeesState extends State<ListEmployees> {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
-          final employees = snapshot.data!;
+          final repairs = snapshot.data!;
           return ListView.builder(
-            itemCount: employees.length,
+            itemCount: repairs.length,
             itemBuilder: ((context, index) {
-              final employee = employees[index];
+              final repair = repairs[index];
               // use ListView.builder(
               // itemBuilder: (_, index) =>
               //  Text ('Item $index'),
@@ -45,8 +45,8 @@ class _ListEmployeesState extends State<ListEmployees> {
                       },
                       icon: const Icon(Icons.delete),
                     ),
-                    title: Text(employee['First Name'] + " " + employee['Last Name']),
-                    subtitle: Text('${employee['Employee ID'].toString()} \n ${employee['Employee Type']}'),
+                    title: Text('${repair['Case Number'].toString()} - ${repair['FullName']}'),
+                    subtitle: Text('${repair['Phone Number']} \n ${repair['Device']}'),
                     isThreeLine: true,
                     trailing: IconButton.outlined(
                       onPressed: () {
