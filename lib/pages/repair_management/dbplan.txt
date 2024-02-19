@@ -11,7 +11,11 @@ hardware PK
 hardware_symptoms
 part_serial
 device_serial
-repair_notes
+
+Repair Notes:
+case_number PK FK1
+employee_ID PK FK2
+notes
 
 Date Info:
 case_number PK FK1
@@ -27,3 +31,5 @@ current_status
 2: Finished
 3: Abandoned
 4: Free
+5: Bought
+6: Donated

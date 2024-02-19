@@ -72,7 +72,7 @@ class _AddEmployeeState extends State<AddEmployee> {
                   // check if user and primary key are actually in there
                   //  if true, reject and show popup,
                   // if false, insert row
-                  .from('Users')
+                  .from('Employees')
                   .insert({'First Name':firstnamecontroller.text, 'Last Name':lastnamecontroller.text, 'Employee ID':employeepin.text});
               },
               style: ElevatedButton.styleFrom(

@@ -11,8 +11,7 @@ class ListRepairs extends StatefulWidget {
 class _ListRepairsState extends State<ListRepairs> {
   final _future = Supabase.instance.client
       .from('Repairs')
-      .select()
-      .limit(10);
+      .select();
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +45,8 @@ class _ListRepairsState extends State<ListRepairs> {
                       },
                       icon: const Icon(Icons.delete),
                     ),
-                    title: Text('${repair['Case Number'].toString()} - ${repair['Full Name']}'),
-                    subtitle: Text('${repair['Phone Number']} \n ${repair['Device']}'),
+                    title: Text(repair['case_number'].toString()),
+                    subtitle: Text('${repair['phone_number']}'),
                     isThreeLine: true,
                     trailing: IconButton.outlined(
                       onPressed: () {

@@ -15,8 +15,8 @@ class _ManageRepairsState extends State<ManageRepairs> {
      Widget build(BuildContext context) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Employee Management'),
-          backgroundColor: Colors.red,
+          title: const Text('Repair Management'),
+          backgroundColor: Colors.green,
         ),
         body: Center(
           child: Column(

@@ -45,7 +45,7 @@ class _ListEmployeesState extends State<ListEmployees> {
                       },
                       icon: const Icon(Icons.delete),
                     ),
-                    title: Text(employee['First Name'] + " " + employee['Last Name']),
+                    title: Text('${employee['First Name']} " " ${employee['Last Name']}'),
                     subtitle: Text('${employee['Employee ID'].toString()} \n ${employee['Employee Type']}'),
                     isThreeLine: true,
                     trailing: IconButton.outlined(

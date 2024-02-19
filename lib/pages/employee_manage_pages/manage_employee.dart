@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:repair_tracker_application/pages/employee_manage_pages/list_employees.dart';
+import '../employee_manage_pages/list_employees.dart';
 import 'add_employee.dart';
 import 'delete_employee.dart';
 
