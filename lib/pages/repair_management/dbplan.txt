@@ -1,3 +1,27 @@
-each case number should be different for every order
-the same person can bring in different devices
-the same person usually uses the same phone number
+Repair Info:
+case_number PK
+name PK
+phone_number PK
+current_status_ID
+total_price
+
+Hardware Info:
+case_number PK FK1
+hardware PK
+hardware_symptoms
+part_serial
+device_serial
+repair_notes
+
+Date Info:
+case_number PK FK1
+date_received PK
+date_finished
+date_picked_up
+
+Status:
+0: Not Started
+1: Waiting For Parts
+2: Finished
+3: Abandoned
+4: Free
