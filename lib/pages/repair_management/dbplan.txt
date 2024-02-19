@@ -20,6 +20,8 @@ date_finished
 date_picked_up
 
 Status:
+current_status_ID PK FK1
+current_status
 0: Not Started
 1: Waiting For Parts
 2: Finished
