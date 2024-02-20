@@ -9,13 +9,13 @@ class ListRepairs extends StatefulWidget {
 }
 
 class _ListRepairsState extends State<ListRepairs> {
-  var dbStart = 0;
-  var dbFinish = dbStart + 10;
+  // var dbStart = 0;
+  // var dbFinish = dbStart + 10;
   
   final _future = Supabase.instance.client
       .from('Repairs_Copy')
       .select()
-      .range(dbStart, dbFinish)
+      .range(0, 10)
       .order('Date Received');
 
   @override
@@ -43,23 +43,28 @@ class _ListRepairsState extends State<ListRepairs> {
               // to build items on demand
               return Column(
                 children: [
-                  // Use ExpandedTile
-                  ListTile(
-                    leading: IconButton.outlined(
-                      onPressed: () {
-                        // change Text childs to textfields, change the delete button to confirmation icon
-                      },
-                      icon: const Icon(Icons.delete),
-                    ),
-                    title: Text('${repair['Case Number'].toString()} - ${repair['Full Name']}'),
-                    subtitle: Text('${repair['Phone Number']} \n ${repair['Device']}'),
-                    isThreeLine: true,
-                    trailing: IconButton.outlined(
-                      onPressed: () {
-                        // Add Dialog for confirmation to delete
-                      },
-                      icon: const Icon(Icons.done)),
-                  ),
+                  ExpansionTile(
+                    title: Text('${repair['Case Number']}'),
+                    subtitle: Text('${repair['Full Name']}'),
+                    children: [
+                      ListTile(
+                        leading: IconButton.outlined(
+                          onPressed: () {
+                            // change Text childs to textfields, change the delete button to confirmation icon
+                          },
+                          icon: const Icon(Icons.delete),
+                        ),
+                        title: Text('${repair['Case Number'].toString()} - ${repair['Full Name']}'),
+                        subtitle: Text('${repair['Phone Number']} \n ${repair['Device']}'),
+                        isThreeLine: true,
+                        trailing: IconButton.outlined(
+                          onPressed: () {
+                            // Add Dialog for confirmation to delete
+                          },
+                          icon: const Icon(Icons.done)),
+                      ),
+                    ],
+                  )
                 ],
               );
             }
