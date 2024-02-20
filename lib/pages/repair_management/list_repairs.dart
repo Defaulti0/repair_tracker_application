@@ -9,16 +9,21 @@ class ListRepairs extends StatefulWidget {
 }
 
 class _ListRepairsState extends State<ListRepairs> {
+  var dbStart = 0;
+  var dbFinish = dbStart + 10;
+  
   final _future = Supabase.instance.client
-      .from('Repairs')
-      .select();
+      .from('Repairs_Copy')
+      .select()
+      .range(dbStart, dbFinish)
+      .order('Date Received');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Repair Management'),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.purple,
       ),
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: _future,
@@ -38,6 +43,7 @@ class _ListRepairsState extends State<ListRepairs> {
               // to build items on demand
               return Column(
                 children: [
+                  // Use ExpandedTile
                   ListTile(
                     leading: IconButton.outlined(
                       onPressed: () {
@@ -45,8 +51,8 @@ class _ListRepairsState extends State<ListRepairs> {
                       },
                       icon: const Icon(Icons.delete),
                     ),
-                    title: Text(repair['case_number'].toString()),
-                    subtitle: Text('${repair['phone_number']}'),
+                    title: Text('${repair['Case Number'].toString()} - ${repair['Full Name']}'),
+                    subtitle: Text('${repair['Phone Number']} \n ${repair['Device']}'),
                     isThreeLine: true,
                     trailing: IconButton.outlined(
                       onPressed: () {

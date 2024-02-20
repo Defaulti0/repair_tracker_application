@@ -38,6 +38,7 @@ class _ListEmployeesState extends State<ListEmployees> {
               // to build items on demand
               return Column(
                 children: [
+                  // Add search bar here?
                   ListTile(
                     leading: IconButton.outlined(
                       onPressed: () {
@@ -52,7 +53,8 @@ class _ListEmployeesState extends State<ListEmployees> {
                       onPressed: () {
                         // Add Dialog for confirmation to delete
                       },
-                      icon: const Icon(Icons.done)),
+                      icon: const Icon(Icons.done)
+                    ),
                   ),
                 ],
               );
