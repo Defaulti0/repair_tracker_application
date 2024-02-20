@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:repair_tracker_application/supabase_client.dart';
 
 class ListEmployees extends StatefulWidget {
   const ListEmployees({super.key});
@@ -8,15 +8,34 @@ class ListEmployees extends StatefulWidget {
   State<ListEmployees> createState() => _ListEmployeesState();
 }
 
-class _ListEmployeesState extends State<ListEmployees> {  
-  final _future = Supabase.instance.client
+Future<List<Map<String, dynamic>>> getEmployees() async {
+  final supabase = SupabaseClientInstance.instance;
+
+  final response = await supabase.from('Employees').select();
+  return response;
+}
+
+Future<void> deleteEmployee() async {
+  final supabase = SupabaseClientInstance.instance;
+    
+  await supabase
       .from('Employees')
-      .select();
-  
+      .delete()
+      .match({'Employee ID': 1234});
+}
+
+class _ListEmployeesState extends State<ListEmployees> {  
+  var _future = getEmployees();
+
+  @override
+  void updateList() {
+    setState(() {
+      _future = getEmployees();
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
-    final supabase = Supabase.instance.client;
 
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +69,7 @@ class _ListEmployeesState extends State<ListEmployees> {
                       icon: const Icon(Icons.done),
                     ),
                     title: Text('${employee['First Name']} ${employee['Last Name']}'),
-                    subtitle: Text('${employee['Employee ID'].toString()} \n ${employee['Employee Type']}'),
+                    subtitle: Text('${employee['Employee ID']} \n ${employee['Employee Type']}'),
                     isThreeLine: true,
                     trailing: IconButton.outlined(
                       onPressed: () => showDialog<String>(
@@ -66,20 +85,19 @@ class _ListEmployeesState extends State<ListEmployees> {
                                 const SizedBox(height: 15),
                                 TextButton(
                                   onPressed: () {
-                                    const SnackBar(
-                                      content: Text('Deleted Employee.'),
+                                    deleteEmployee();
+                                    updateList();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Deleted Employee.'),
+                                      ),
                                     );
-                                    // await supabase
-                                    //   .from('Employees')
-                                    //   .delete()
-                                    //   .match({'Employee ID': 1234});
                                     Navigator.pop(context);
                                   }, 
                                 child: const Text('Yes')
                                 ),
                                 TextButton(
                                   onPressed: () {
-                                    
                                     Navigator.pop(context);
                                   }, 
                                 child: const Text('No'),

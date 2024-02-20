@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../main.dart';
+import 'package:repair_tracker_application/supabase_client.dart';
 
 class AddEmployee extends StatefulWidget {
   const AddEmployee({super.key});
@@ -14,6 +14,8 @@ class _AddEmployeeState extends State<AddEmployee> {
   late final TextEditingController lastnamecontroller = TextEditingController();
   late final TextEditingController employeepin = TextEditingController();
   late final TextEditingController employeetypecontroller = TextEditingController();
+  
+  final supabase = SupabaseClientInstance.instance;
 
   @override
   void dispose(){
@@ -32,7 +34,7 @@ class _AddEmployeeState extends State<AddEmployee> {
         backgroundColor: Colors.blue,
       ),
       body: Center(
-        child: Column(
+        child: Row(
           children: [
             TextFormField(
               decoration: const InputDecoration(
@@ -68,10 +70,10 @@ class _AddEmployeeState extends State<AddEmployee> {
             ),
             ElevatedButton(
               onPressed: () async {
-                await supabase
                   // check if user and primary key are actually in there
                   //  if true, reject and show popup,
                   // if false, insert row
+                await supabase
                   .from('Employees')
                   .insert({'First Name':firstnamecontroller.text, 'Last Name':lastnamecontroller.text, 'Employee ID':employeepin.text});
               },
