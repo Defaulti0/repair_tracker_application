@@ -36,37 +36,45 @@ class _AddEmployeeState extends State<AddEmployee> {
       body: Center(
         child: Row(
           children: [
-            TextFormField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter the first name',
-              ),
-              controller: firstnamecontroller,
+            Flexible( 
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter the first name',
+                ),
+                controller: firstnamecontroller,
+              )
             ),
-            TextFormField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter the last name',
+            Flexible(
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter the last name',
+                ),
+                controller: lastnamecontroller,
               ),
-              controller: lastnamecontroller,
             ),
-            TextFormField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter the employee pin',
+            Flexible(
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter the employee pin',
+                ),
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly
+                ],
+                controller: employeepin,
               ),
-              keyboardType: TextInputType.number,
-              inputFormatters: <TextInputFormatter>[
-                FilteringTextInputFormatter.digitsOnly
-              ],
-              controller: employeepin,
             ),
-            TextFormField(
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter employee type'
+            Flexible(
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Enter employee type'
+                ),
+                controller: employeetypecontroller,
               ),
-              controller: employeetypecontroller,
             ),
             ElevatedButton(
               onPressed: () async {

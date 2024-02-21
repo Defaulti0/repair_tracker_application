@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:repair_tracker_application/pages/repair_management/manage_repairs.dart';
-import 'employee_manage_pages/manage_employee.dart';
+import 'employee_manage_pages/list_employees.dart';
 
 class MainMenu extends StatefulWidget {
   const MainMenu({super.key});
@@ -24,7 +24,7 @@ class _MainMenuState extends State<MainMenu> {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute( 
-                      builder: (context) => const ManageEmployee(),
+                      builder: (context) => const ListEmployees(),
                     ),
                   );
                 },

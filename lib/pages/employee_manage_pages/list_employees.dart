@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:repair_tracker_application/supabase_client.dart';
+
+final supabase = SupabaseClientInstance.instance;
 
 class ListEmployees extends StatefulWidget {
   const ListEmployees({super.key});
@@ -15,17 +18,44 @@ Future<List<Map<String, dynamic>>> getEmployees() async {
   return response;
 }
 
-Future<void> deleteEmployee() async {
-  final supabase = SupabaseClientInstance.instance;
-    
+Future<void> addEmployee(TextEditingController fnControl, TextEditingController lnControl, TextEditingController empPinCont, String empType) async {
+  // final supabase = SupabaseClientInstance.instance;
+  await supabase
+    .from('Employees')
+    .insert({
+      'First Name':fnControl.text, 
+      'Last Name':lnControl.text, 
+      'Employee ID':empPinCont.text,
+      'Employee Type': empType,   
+    });
+}
+
+Future<void> deleteEmployee(String empID) async {
   await supabase
       .from('Employees')
       .delete()
-      .match({'Employee ID': 1234});
+      .match({'Employee ID': empID});
 }
 
 class _ListEmployeesState extends State<ListEmployees> {  
   var _future = getEmployees();
+  late TextEditingController fnControl = TextEditingController();
+  late TextEditingController lnControl = TextEditingController();
+  late TextEditingController empPinCont = TextEditingController();
+  late TextEditingController employeetypecontroller = TextEditingController();
+  
+  
+  String empType = 'Regular'; // Default value
+  // get list of employee types
+
+  @override
+  void dispose() {
+    fnControl.dispose();
+    lnControl.dispose();
+    empPinCont.dispose();
+    employeetypecontroller.dispose();
+    super.dispose();
+  }
 
   void updateList() {
     setState(() {
@@ -52,17 +82,16 @@ class _ListEmployeesState extends State<ListEmployees> {
             itemCount: employees.length,
             itemBuilder: ((context, index) {
               final employee = employees[index];
-              // use ListView.builder(
-              // itemBuilder: (_, index) =>
-              //  Text ('Item $index'),
-              // ); 
-              // to build items on demand
               return Column(
                 children: [
                   // Add search bar here?
                   ListTile(
                     leading: IconButton.outlined(
                       onPressed: () {
+                        setState(() {
+                          // isEditing = true;
+                          // if isEditing == true then change Text widgets to TextFields
+                        });
                         // change Text childs to textfields, change the delete button to confirmation icon
                       },
                       icon: const Icon(Icons.done),
@@ -81,10 +110,10 @@ class _ListEmployeesState extends State<ListEmployees> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text("Are you sure you want to delete this employee?"),
-                                const SizedBox(height: 15),
+                                const SizedBox(height: 20),
                                 TextButton(
                                   onPressed: () {
-                                    deleteEmployee();
+                                    deleteEmployee(employee['Employee ID']);
                                     updateList();
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
@@ -105,7 +134,6 @@ class _ListEmployeesState extends State<ListEmployees> {
                             )
                           )
                         )
-                        // Add Dialog for confirmation to delete
                       ),
                       icon: const Icon(Icons.delete)
                     ),
@@ -116,6 +144,86 @@ class _ListEmployeesState extends State<ListEmployees> {
           )
         );
       },
+    ),
+    floatingActionButton: FloatingActionButton(
+      onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter the first name',
+                  ),
+                  controller: fnControl,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter the last name',
+                  ),
+                  controller: lnControl,
+                ),
+                DropdownButtonFormField<String>(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Select employee type',
+                  ),
+                  value: empType,
+                  items: const [
+                    DropdownMenuItem(
+                      value: 'Regular',
+                      child: Text('Regular'),
+                    ),
+                    // Add more options as needed
+                  ],
+                  onChanged: (value) => setState(() => empType = value!),
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter the employee pin',
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  controller: empPinCont,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        addEmployee(fnControl, lnControl, empPinCont, empType);
+                        updateList();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Added Employee.'),
+                                      ),
+                                    );
+                        Navigator.pop(context);
+                        dispose();
+                      },
+                      child: const Text('Add'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      tooltip: 'Add Employee',
+      child: const Icon(Icons.add),
     ),
   );
 }}

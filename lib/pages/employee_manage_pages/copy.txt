@@ -1,0 +1,67 @@
+FloatingActionButton(
+      onPressed: () => 
+        Dialog(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter the first name',
+                  ),
+                  controller: fnControl,
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter the last name',
+                  ),
+                  controller: lnControl,
+                ),
+                DropdownButtonFormField<String>(
+                  value: empType,
+                  items: const [
+                    DropdownMenuItem(
+                      value: 'Regular',
+                      child: Text('Regular'),
+                    ),
+                    // Add more options as needed
+                  ],
+                  onChanged: (value) => setState(() => empType = value!),
+                ),
+                TextFormField(
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter the employee pin',
+                  ),
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly
+                  ],
+                  controller: empPinCont,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        addEmployee(fnControl, lnControl, empPinCont, empType);
+                        dispose();
+                      },
+                      child: const Text('Add'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      tooltip: 'Add Employee',
+      child: const Icon(Icons.add),
+    ),
