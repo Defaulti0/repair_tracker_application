@@ -23,10 +23,10 @@ Future<void> addEmployee(TextEditingController fnControl, TextEditingController 
   await supabase
     .from('Employees')
     .insert({
-      'First Name':fnControl.text, 
-      'Last Name':lnControl.text, 
-      'Employee ID':empPinCont.text,
-      'Employee Type': empType,   
+      'first_name':fnControl.text, 
+      'last_name':lnControl.text, 
+      'employee_ID':empPinCont.text,
+      'employee_type': empType,   
     });
 }
 
@@ -34,7 +34,7 @@ Future<void> deleteEmployee(String empID) async {
   await supabase
       .from('Employees')
       .delete()
-      .match({'Employee ID': empID});
+      .match({'employee_ID': empID});
 }
 
 class _ListEmployeesState extends State<ListEmployees> {  
@@ -96,8 +96,8 @@ class _ListEmployeesState extends State<ListEmployees> {
                       },
                       icon: const Icon(Icons.done),
                     ),
-                    title: Text('${employee['First Name']} ${employee['Last Name']}'),
-                    subtitle: Text('${employee['Employee ID']} \n ${employee['Employee Type']}'),
+                    title: Text('${employee['first_name']} ${employee['last_name']}'),
+                    subtitle: Text('${employee['employee_ID']} \n ${employee['employee_type']}'),
                     isThreeLine: true,
                     trailing: IconButton.outlined(
                       onPressed: () => showDialog<String>(
@@ -113,7 +113,7 @@ class _ListEmployeesState extends State<ListEmployees> {
                                 const SizedBox(height: 20),
                                 TextButton(
                                   onPressed: () {
-                                    deleteEmployee(employee['Employee ID']);
+                                    deleteEmployee(employee['employee_ID']);
                                     updateList();
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
