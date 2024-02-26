@@ -12,22 +12,24 @@ class ListEmployees extends StatefulWidget {
 }
 
 Future<List<Map<String, dynamic>>> getEmployees() async {
-  final supabase = SupabaseClientInstance.instance;
+  // final supabase = SupabaseClientInstance.instance;
 
-  final response = await supabase.from('Employees').select();
+  final response = await supabase
+                      .from('Employees')
+                      .select();
   return response;
 }
 
 Future<void> addEmployee(TextEditingController fnControl, TextEditingController lnControl, TextEditingController empPinCont, String empType) async {
   // final supabase = SupabaseClientInstance.instance;
   await supabase
-    .from('Employees')
-    .insert({
-      'first_name':fnControl.text, 
-      'last_name':lnControl.text, 
-      'employee_ID':empPinCont.text,
-      'employee_type': empType,   
-    });
+      .from('Employees')
+      .insert({
+        'first_name':fnControl.text, 
+        'last_name':lnControl.text, 
+        'employee_ID':empPinCont.text,
+        'employee_type': empType,   
+      });
 }
 
 Future<void> deleteEmployee(String empID) async {
@@ -35,6 +37,13 @@ Future<void> deleteEmployee(String empID) async {
       .from('Employees')
       .delete()
       .match({'employee_ID': empID});
+}
+
+Future<void> getEmpType() async {
+  await supabase
+      .from('Employee Type')
+      .select();
+
 }
 
 class _ListEmployeesState extends State<ListEmployees> {  
@@ -47,6 +56,7 @@ class _ListEmployeesState extends State<ListEmployees> {
   
   String empType = 'Regular'; // Default value
   // get list of employee types
+  // String emplType = getEmpType();
 
   @override
   void dispose() {
