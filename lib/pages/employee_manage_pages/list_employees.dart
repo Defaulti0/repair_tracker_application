@@ -12,29 +12,38 @@ class ListEmployees extends StatefulWidget {
 }
 
 Future<List<Map<String, dynamic>>> getEmployees() async {
-  final supabase = SupabaseClientInstance.instance;
+  // final supabase = SupabaseClientInstance.instance;
 
-  final response = await supabase.from('Employees').select();
+  final response = await supabase
+                      .from('Employees')
+                      .select();
   return response;
 }
 
 Future<void> addEmployee(TextEditingController fnControl, TextEditingController lnControl, TextEditingController empPinCont, String empType) async {
   // final supabase = SupabaseClientInstance.instance;
   await supabase
-    .from('Employees')
-    .insert({
-      'First Name':fnControl.text, 
-      'Last Name':lnControl.text, 
-      'Employee ID':empPinCont.text,
-      'Employee Type': empType,   
-    });
+      .from('Employees')
+      .insert({
+        'first_name':fnControl.text, 
+        'last_name':lnControl.text, 
+        'employee_ID':empPinCont.text,
+        'employee_type': empType,   
+      });
 }
 
 Future<void> deleteEmployee(String empID) async {
   await supabase
       .from('Employees')
       .delete()
-      .match({'Employee ID': empID});
+      .match({'employee_ID': empID});
+}
+
+Future<void> getEmpType() async {
+  await supabase
+      .from('Employee Type')
+      .select();
+
 }
 
 class _ListEmployeesState extends State<ListEmployees> {  
@@ -47,6 +56,7 @@ class _ListEmployeesState extends State<ListEmployees> {
   
   String empType = 'Regular'; // Default value
   // get list of employee types
+  // String emplType = getEmpType();
 
   @override
   void dispose() {
@@ -96,8 +106,8 @@ class _ListEmployeesState extends State<ListEmployees> {
                       },
                       icon: const Icon(Icons.done),
                     ),
-                    title: Text('${employee['First Name']} ${employee['Last Name']}'),
-                    subtitle: Text('${employee['Employee ID']} \n ${employee['Employee Type']}'),
+                    title: Text('${employee['first_name']} ${employee['last_name']}'),
+                    subtitle: Text('${employee['employee_ID']} \n ${employee['employee_type']}'),
                     isThreeLine: true,
                     trailing: IconButton.outlined(
                       onPressed: () => showDialog<String>(
@@ -113,7 +123,7 @@ class _ListEmployeesState extends State<ListEmployees> {
                                 const SizedBox(height: 20),
                                 TextButton(
                                   onPressed: () {
-                                    deleteEmployee(employee['Employee ID']);
+                                    deleteEmployee(employee['employee_ID']);
                                     updateList();
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
